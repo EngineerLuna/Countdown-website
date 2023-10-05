@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subspace Incentive Testnet Countdown</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>-->
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var request = {
+            "jsonrpc": "2.0",
+            "method": "chain_getHeader",
+            "id": 1
+        }
+
+        
+
+
+
+        async function doAjax(){
+            let sonuc= await 
+            jQuery.ajax({
+            url:"https://rpc-0.gemini-3f.subspace.network/ws",
+            type:"POST",
+            data:JSON.stringify(request),
+            dataType : "json",
+            headers:{
+                "Content-Type": "application/json",
+                "Server-Protocol":'JSON_RPC'
+            },
+            success: function(response){
+                //$("#output").text(JSON.stringify(response,null,2));
+                let sayi =  JSON.stringify(response.result.number,null,2)
+                console.log(sayi)
+            
+            }
+        });
+        return sonuc;
+        }
+        
+        async function tt(){
+            var res = await doAjax()
+            let bloksayisi = parseInt(res.result.number,16);
+            console.log(bloksayisi)
+            if(bloksayisi>900610){bloksayisi=0}
+            else{
+                
+
+                function suAnkiZamaniAl() {
+  const tarih = new Date();
+  const saat = tarih.getHours();
+  const dakika = tarih.getMinutes();
+  const saniye = tarih.getSeconds();
+  return { saat, dakika, saniye };
+}
+
+            const hedefSaat = 19; // Akşam 8:00
+             const suAnkiZaman = suAnkiZamaniAl();
+             const kalanSaat = hedefSaat - suAnkiZaman.saat;
+            const kalanDakika = 59 - suAnkiZaman.dakika;
+             const kalanSaniye = 59 - suAnkiZaman.saniye;
+            
+
+            
+            let saniyedekilerlememiktari = 600/3600
+            let kalanSureSaniye = kalanSaat * 3600 + kalanDakika * 60 + kalanSaniye;
+            console.log(kalanSureSaniye)
+            let bloksayisi_ekran = bloksayisi + Math.round(saniyedekilerlememiktari*kalanSureSaniye)
+            console.log("BURADA HANGİ BLOKTA BİTeceği")
+            console.log(bloksayisi_ekran)
+            console.log("BURADAN SONRA GERİYE KALAN TAHMİNİ SAYI YAZIYOR")
+            let geriye_kalan_tahminibloksayisi_ekran = bloksayisi_ekran - bloksayisi
+            console.log("TAHMİNİ GERİYE KALIN")
+            console.log(geriye_kalan_tahminibloksayisi_ekran)
+                
+                
+                jQuery("#blokrakamı").text(geriye_kalan_tahminibloksayisi_ekran);}
+            jQuery("#blokrakamı2").text(bloksayisi);
+
+            
+            
+           
+
+        }
+
+        
+
+        tt()
+
+        setInterval(tt,1000);
+
+
+
+        //let bloksayisi= parseInt(sayi,16)
+        //console.log(bloksayisi)
+
+        var hexNumber = '0x43016';
+        var intNumber = parseInt(hexNumber, 16);  // <--- hex to int conversion
+
+        //console.log(intNumber); 
+
+
+      /*  $(document).ready(function(){
+            $("p").click(function(){
+                $(this).hide();
+            });
+        }); */
+
+
+        /////////////////////////
+     /*   function suAnkiZamaniAl() {
+        const tarih = new Date();
+        const saat = tarih.getHours();
+        const dakika = tarih.getMinutes();
+        const saniye = tarih.getSeconds();
+        return { saat, dakika, saniye };
+        }
+
+// Geri sayımı hesapla ve konsola yazdır
+function geriSayim() {
+  const hedefSaat = 20; // Akşam 8:00
+  const suAnkiZaman = suAnkiZamaniAl();
+  const kalanSaat = hedefSaat - suAnkiZaman.saat;
+  const kalanDakika = 59 - suAnkiZaman.dakika;
+  const kalanSaniye = 59 - suAnkiZaman.saniye;
+
+  console.log(`Kalan süre: ${kalanSaat} saat, ${kalanDakika} dakika, ${kalanSaniye} saniye`);
+
+  jQuery("#saat").text(kalanSaat)
+  jQuery("#dakika").text(kalanDakika)
+  jQuery("#saniye").text(kalanSaniye)
+}
+
+// Her 1 saniyede bir geri sayımı güncelle
+setInterval(geriSayim, 1000); */
+
+// Türkiye saatiyle şu anki zamanı al
+function suAnkiZamaniAl() {
+  const tarih = new Date();
+  const saat = tarih.getHours();
+  const dakika = tarih.getMinutes();
+  const saniye = tarih.getSeconds();
+  return { saat, dakika, saniye };
+}
+
+// Geri sayımı hesapla ve konsola yazdır
+function geriSayim() {
+  const hedefSaat = 19; // Akşam 8:00
+  const suAnkiZaman = suAnkiZamaniAl();
+  const kalanSaat = hedefSaat - suAnkiZaman.saat;
+  const kalanDakika = 59 - suAnkiZaman.dakika;
+  const kalanSaniye = 59 - suAnkiZaman.saniye;
+
+  if (kalanSaat <= 0 && kalanDakika <= 0 && kalanSaniye <= 0) {
+    console.log("Süre doldu: 0 saat, 0 dakika, 0 saniye");
+    clearInterval(intervalID); // Geri sayımı durdur
+    // Süre dolduğunda yapılacak işleri buraya ekleyebilirsiniz
+  } else {
+    console.log(`Kalan süre: ${kalanSaat} saat, ${kalanDakika} dakika, ${kalanSaniye} saniye`);
+   // jQuery("#saat").text(kalanSaat)
+  //jQuery("#dakika").text(kalanDakika)
+  //jQuery("#saniye").text(kalanSaniye)
+  }
+
+  
+}
+
+// Her 1 saniyede bir geri sayımı güncelle
+const intervalID = setInterval(geriSayim, 1000);
+
+
+///////////////////////
+
+
+
+
+    </script>
+    <div class="ilkbolum">
+        <pre><code id="output"></code></pre>
+        <img src="subspace_logo2.svg" alt="svg" srcset="">
+        
+        
+        
+        <p id="blokrakamı" ></p>
+        <p id="blokyazisi">Remaning Block
+           <p >
+            <section id="loading">
+                <div class="loader">
+                    <div class="dot" style="--i:0;"></div>
+                    <div class="dot" style="--i:1;"></div>
+                    <div class="dot" style="--i:2;"></div>
+                    <div class="dot" style="--i:3;"></div>
+                    <div class="dot" style="--i:4;"></div>
+                    <div class="dot" style="--i:5;"></div>
+                    <div class="dot" style="--i:6;"></div>
+                    <div class="dot" style="--i:7;"></div>
+                    <div class="dot" style="--i:8;"></div>
+                    <div class="dot" style="--i:9;"></div>
+                </div>
+            </section>
+           </p> 
+        </p>
+
+        <p id="blokrakamı2" ></p>
+        <p id="text2">CURRENT BLOCK NUMBER</p>
+        <div id="sure_div"><p id="sure"><span id="saat"></span><span>HRS</span>
+            <span id="dakika"></span><span>MINS</span>
+            <span id="saniye"></span><span>SECS</span>
+        </p></div>
+        
+        
+        <h2 id="text1">GEMINI III NON-INCENTIVIZED TESTNET GOES TO INCENTIVE
+            <p id="surat">🥳</p>
+        </h2>
+        
+        </div>
+       <!--  <div class="ikincibolum"> 
+        </div> -->
+        <h1 class="bekleme_yazisi">While Waiting Countdown Enjoy the Subspace Battle Game!</h1>
+        <div class="ucuncubolum">
+            
+        </div>
+
+   <!-- Game -->
+   <div id="app">
+    <div id="logo">
+        <img src="./img/logo-01.png" alt="logo">
+    </div>
+    <div id="container" class="absolute">
+        <div id="start" class="column">
+            <p class="message pre">
+                1. Press <strong>W、A、S、D</strong> control Subspacecraft，Press Space fire.
+                2. The initial harddisk value is <strong>15</strong>. Decrement by <strong>1</strong> point per second. When the harddisk value is 0, the game is over.
+                3. The harddisk that touches it can be increased by <strong>15</strong> points and the maximum value is <strong>30</strong> points.
+                4. Hit the enemy spacecraft (fiat money) to increase by 5 points. The bank, rock and thief needs to hit twice, increasing by 10 points. Hit the friend (bitcoin) to deduct 10 points.
+                5. Collision enemy loses <strong>15</strong> points of harddisk, and the friendly (bitcoin) party deducts <strong>10</strong> points.
+                6. Game allows negative points.
+                7. Press <strong>P</strong> Pause game. Press <strong>M</strong> mute。
+                Embark you Space Adventure now!
+            </p>
+            <button id="start-btn" class="btn">
+                <p>Start</p>
+                <p>Loading...</p>
+            </button>
+        </div>
+        <div id="play" class="absolute">
+            <canvas id="canvas" class="absolute"></canvas>
+            <div class="content absolute">
+                <div class="header">
+                    <ul class="info">
+                        <li>
+                            <img src="./img/time3.png" alt="time">
+                            <span id="time">00</span>
+                        </li>
+                        <li>
+                            <img src="./img/fuel2.png" alt="fuel">
+                            <span id="fuel">00</span>
+                        </li>
+                        <li>
+                            <img src="./img/score.png" alt="score">
+                            <span id="score">00</span>
+                        </li>
+                        <li>
+                            <img src="./img/playerBullet.png" alt="score">
+                            <span id="shoot">00</span>
+                        </li>
+
+                    </ul>
+                    <ul class="option">
+                        <li id="game-font-size-add">
+                            <img class="pause" src="./img/a+.png" alt="time">
+                        </li>
+                        <li id="game-font-size-reduce">
+                            <img class="pause" src="./img/a-.png" alt="time">
+                        </li>
+                        <li id="game-mute-btn">
+                            <img class="pause" src="./img/mute.png" alt="time">
+                            <img class="pause" src="./img/speaker.png" alt="time">
+                        </li>
+                        <li id="game-pause-btn">
+                            <img class="pause" src="./img/play.png" alt="time">
+                            <img class="pause" src="./img/pause.png" alt="time">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="over" class="column absolute">
+            <div class="game-data">
+                <p class="message">
+                    <span>
+                        <img src="./img/time3.png" alt="time">
+                    </span>
+                    <span>
+                        --
+                    </span>
+                    <span class="time">00</span>
+                </p>
+                <p class="message">
+                    <span>
+                        <img src="./img/score.png" alt="score">
+                    </span>
+                    <span>
+                        --
+                    </span>
+                    <span class="score">00</span>
+                </p>
+                <p class="message">
+                    <span>
+                        <img src="./img/playerBullet.png" alt="score">
+                    </span>
+                    <span>
+                        --
+                    </span>
+                    <span class="shoot">00</span>
+                </p>
+            </div>
+            <input type="text" id="name" placeholder="Enter your name" />
+            <button id="submit-btn" class="btn" disabled>
+                Continue
+            </button>
+        </div>
+        <div id="rank" class="column absolute">
+            <table class="scroll">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Fuel</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+            <button id="restart-btn" class="btn">
+                Restart
+            </button>
+        </div>
+    </div>
+</div>
+<!-- <div id="p1_div">
+    <p id="p1">If you like the game and want to play with other friends and share your score, 
+        you can do it on social media platforms such as twitter with #subspace, 
+        #incentivetestnet, #countdownblock etc... , 
+        discord and take part in the SUBSPACE support community.</p>     
+</div> -->
+
+<div id="p1_div">
+    <p id="p1">NOTE: If you like Subspace Battle and want to play with friends, screenshot and share scores, 
+        and be part of the Subspace community,  
+        join us on social media using hashtags like #Subspace, #IncentiveTestnet, #CountdownBlock. 
+        Connect on Discord and dive into the Subspace world!</p>
+</div>
+
+<div id="linkler">
+    <div>
+        <a href="https://discord.com/invite/subspace-network">
+            <img id="foto1" src="discord.png"></a>
+            <a href="https://twitter.com/NetworkSubspace">
+                <img id="foto2" src="twitter.png"></a>
+    </div>
+    
+</div>
+
+    <p id="p2"></p>
+        <p id="son_yazi">made by ❤️ </p>
+       
+<script src="js/config/config.js"></script>
+<script src="js/utils/utils.js"></script>
+<script src="js/utils/res.js"></script>
+<script src="js/class/scene.js"></script>
+<script src="js/class/cooldown.js"></script>
+<script src="js/class/element.js"></script>
+<script src="js/class/animation.js"></script>
+<script src="js/class/plane.js"></script>
+<script src="js/class/bullet.js"></script>
+<script src="js/class/player.js"></script>
+<script src="js/class/enemy.js"></script>
+<script src="js/class/meteorite.js"></script>
+<script src="js/class/friend.js"></script>
+<script src="js/class/star.js"></script>
+<script src="js/class/fuel.js"></script>
+<script src="js/scenes/start.js"></script>
+<script src="js/scenes/play.js"></script>
+<script src="js/scenes/over.js"></script>
+<script src="js/scenes/rank.js"></script>
+<script src="js/game.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
